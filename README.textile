@@ -1,0 +1,7 @@
+h1. Functional Programming... in Java?
+
+This is the source code for exercises for a workshop on Functional Programming in Java held at the Roots 2012 Conference in Bergen, Norway by Fredrik Vraalsen. The workshop is partially based on "another workshop on Functional Programming":https://bitbucket.org/stoyle/functional-workshop held by Fredrik Vraalsen and Alf Kristian Støyle. Both work for "Knowit AS":http://www.knowit.no/.
+
+The purpose is to teach Java devs what functional programming is about. It is introductory, and is meant to take about 3 hours to complete.
+
+Material is published under "Creative Commons Attribution 3.0 Unported License":http://creativecommons.org/licenses/by/3.0/.
