@@ -9,7 +9,6 @@ import static org.junit.Assert.assertThat;
 
 import com.google.common.collect.ImmutableList;
 import java.util.List;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -33,11 +32,10 @@ public class Exercise_2_Filter_Test {
 	 * than 100.
 	 */
 	@Test
-	@Ignore
 	public void numbers_above_100_lambdaj() {
 		final List<Integer> numbers = ImmutableList.of(17, 314, 123, 42);
 
-		List<Integer> above_100 = numbers;
+		List<Integer> above_100 = filter(greaterThan(100), numbers);
 
 		assertThat(above_100, hasItems(314, 123));
 		assertThat(above_100.size(), is(equalTo(2)));
@@ -48,11 +46,17 @@ public class Exercise_2_Filter_Test {
 	 * greater than 100.
 	 */
 	@Test
-	@Ignore
 	public void numbers_above_100_functionaljava() {
 		final List<Integer> numbers = ImmutableList.of(17, 314, 123, 42);
 
-		fj.data.List<Integer> above_100 = iterableList(numbers);
+		F<Integer, Boolean> greaterThan100 = new F<Integer, Boolean>() {
+			public Boolean f(Integer i) {
+				return i > 100;
+			}
+		};
+
+		fj.data.List<Integer> above_100 = iterableList(numbers).filter(
+				greaterThan100);
 
 		assertThat(above_100, hasItems(314, 123));
 		assertThat(above_100.length(), is(equalTo(2)));
@@ -66,14 +70,14 @@ public class Exercise_2_Filter_Test {
 	 * need to check lower age limit.
 	 */
 	@Test
-	@Ignore
 	public void find_teens_lambdaj() {
 		Person luke = new Person("Luke", "Skywalker", 19);
 		Person leia = new Person("Leia", "Organa", 19);
 		Person han = new Person("Han", "Solo", 29);
 		final List<Person> people = ImmutableList.of(luke, leia, han);
 
-		List<Person> teens = people;
+		Matcher<Person> isTeen = having(on(Person.class).getAge(), lessThan(20));
+		List<Person> teens = filter(isTeen, people);
 
 		assertThat(teens, hasItems(luke, leia));
 		assertThat(teens.size(), is(equalTo(2)));
@@ -87,14 +91,19 @@ public class Exercise_2_Filter_Test {
 	 * need to check lower age limit.
 	 */
 	@Test
-	@Ignore
 	public void find_teens_functionaljava() {
 		Person luke = new Person("Luke", "Skywalker", 19);
 		Person leia = new Person("Leia", "Organa", 19);
 		Person han = new Person("Han", "Solo", 29);
 		final List<Person> people = ImmutableList.of(luke, leia, han);
 
-		fj.data.List<Person> teens = iterableList(people);
+		F<Person, Boolean> isTeen = new F<Person, Boolean>() {
+			public Boolean f(Person p) {
+				return p.getAge() < 20;
+			}
+		};
+
+		fj.data.List<Person> teens = iterableList(people).filter(isTeen);
 
 		assertThat(teens, hasItems(luke, leia));
 		assertThat(teens.length(), is(equalTo(2)));
@@ -107,14 +116,21 @@ public class Exercise_2_Filter_Test {
 	 * Hint: You may need to create a LambdaJMatcher for part of this exercise.
 	 */
 	@Test
-	@Ignore
 	public void people_with_lastname_starting_with_M_to_R_lambdaj() {
 		Person luke = new Person("Luke", "Skywalker", 19);
 		Person leia = new Person("Leia", "Organa", 19);
 		Person han = new Person("Han", "Solo", 29);
 		final List<Person> people = ImmutableList.of(luke, leia, han);
 
-		List<Person> people_M_to_R = people;
+		Matcher<String> startsWithMtoR = new LambdaJMatcher<String>() {
+			public boolean matches(Object o) {
+				return ((String) o).matches("[M-R].*");
+			}
+		};
+		Matcher<Person> lastnameStartsWithMtoR = having(on(Person.class)
+				.getLastName(), startsWithMtoR);
+
+		List<Person> people_M_to_R = filter(lastnameStartsWithMtoR, people);
 
 		assertThat(people_M_to_R, hasItem(leia));
 		assertThat(people_M_to_R.size(), is(equalTo(1)));
@@ -127,14 +143,19 @@ public class Exercise_2_Filter_Test {
 	 * Hint: You may need to create a LambdaJMatcher for part of this exercise.
 	 */
 	@Test
-	@Ignore
 	public void people_with_lastname_starting_with_M_to_R_functionaljava() {
 		Person luke = new Person("Luke", "Skywalker", 19);
 		Person leia = new Person("Leia", "Organa", 19);
 		Person han = new Person("Han", "Solo", 29);
 		final List<Person> people = ImmutableList.of(luke, leia, han);
 
-		fj.data.List<Person> people_M_to_R = iterableList(people);
+		F<Person, Boolean> lastnameStartsWithMtoR = new F<Person, Boolean>() {
+			public Boolean f(Person p) {
+				return p.getLastName().matches("[M-R].*");
+			}
+		};
+		fj.data.List<Person> people_M_to_R = iterableList(people).filter(
+				lastnameStartsWithMtoR);
 
 		assertThat(people_M_to_R, hasItem(leia));
 		assertThat(people_M_to_R.length(), is(equalTo(1)));
