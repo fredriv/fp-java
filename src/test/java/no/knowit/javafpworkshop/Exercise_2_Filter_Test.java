@@ -18,7 +18,6 @@ import org.junit.Test;
 import static ch.lambdaj.Lambda.filter;
 import static ch.lambdaj.Lambda.having;
 import static ch.lambdaj.Lambda.on;
-import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;
 
 import ch.lambdaj.function.matcher.LambdaJMatcher;
@@ -32,13 +31,13 @@ public class Exercise_2_Filter_Test {
 	 * than 100.
 	 */
 	@Test
-	public void numbers_above_100_lambdaj() {
+	public void numbers_below_100_lambdaj() {
 		final List<Integer> numbers = ImmutableList.of(17, 314, 123, 42);
 
-		List<Integer> above_100 = filter(greaterThan(100), numbers);
+		List<Integer> below_100 = filter(lessThan(100), numbers);;
 
-		assertThat(above_100, hasItems(314, 123));
-		assertThat(above_100.size(), is(equalTo(2)));
+		assertThat(below_100, hasItems(17, 42));
+		assertThat(below_100.size(), is(equalTo(2)));
 	}
 
 	/**
@@ -49,17 +48,17 @@ public class Exercise_2_Filter_Test {
 	public void numbers_above_100_functionaljava() {
 		final List<Integer> numbers = ImmutableList.of(17, 314, 123, 42);
 
-		F<Integer, Boolean> greaterThan100 = new F<Integer, Boolean>() {
+		F<Integer, Boolean> lessThan100 = new F<Integer, Boolean>() {
 			public Boolean f(Integer i) {
-				return i > 100;
+				return i < 100;
 			}
 		};
 
-		fj.data.List<Integer> above_100 = iterableList(numbers).filter(
-				greaterThan100);
+		fj.data.List<Integer> below_100 = iterableList(numbers).filter(
+				lessThan100);
 
-		assertThat(above_100, hasItems(314, 123));
-		assertThat(above_100.length(), is(equalTo(2)));
+		assertThat(below_100, hasItems(17, 42));
+		assertThat(below_100.length(), is(equalTo(2)));
 	}
 
 	/**
