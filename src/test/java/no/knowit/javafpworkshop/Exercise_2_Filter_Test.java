@@ -34,13 +34,13 @@ public class Exercise_2_Filter_Test {
 	 */
 	@Test
 	@Ignore
-	public void numbers_above_100_lambdaj() {
+	public void numbers_below_100_lambdaj() {
 		final List<Integer> numbers = ImmutableList.of(17, 314, 123, 42);
 
-		List<Integer> above_100 = numbers;
+		List<Integer> below_100 = numbers;
 
-		assertThat(above_100, hasItems(314, 123));
-		assertThat(above_100.size(), is(equalTo(2)));
+		assertThat(below_100, hasItems(17, 42));
+		assertThat(below_100.size(), is(equalTo(2)));
 	}
 
 	/**
@@ -49,13 +49,13 @@ public class Exercise_2_Filter_Test {
 	 */
 	@Test
 	@Ignore
-	public void numbers_above_100_functionaljava() {
+	public void numbers_below_100_functionaljava() {
 		final List<Integer> numbers = ImmutableList.of(17, 314, 123, 42);
 
-		fj.data.List<Integer> above_100 = iterableList(numbers);
+		fj.data.List<Integer> below_100 = iterableList(numbers);
 
-		assertThat(above_100, hasItems(314, 123));
-		assertThat(above_100.length(), is(equalTo(2)));
+		assertThat(below_100, hasItems(17, 42));
+		assertThat(below_100.length(), is(equalTo(2)));
 	}
 
 	/**

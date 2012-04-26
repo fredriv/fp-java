@@ -14,7 +14,7 @@ import org.junit.Test;
 public class Exercise_1_Pure_Java_Functional_Test {
 
 	/**
-	 * Exercise: Filter the list of numbers, returning the numbers greater than 100.
+	 * Exercise: Filter the list of numbers, returning the numbers less than 100.
 	 *
 	 * Use only immutable collections, final variables, etc.
 	 *
@@ -23,13 +23,13 @@ public class Exercise_1_Pure_Java_Functional_Test {
 	 */
 	@Test
 	@Ignore
-	public void numbers_above_100() {
+	public void numbers_below_100() {
 		final List<Integer> numbers = ImmutableList.of(17, 314, 123, 42);
 
-		final List<Integer> above_100 = emptyList();
+		final List<Integer> below_100 = emptyList();
 
-		assertThat(above_100, hasItems(314, 123));
-		assertThat(above_100.size(), is(equalTo(2)));
+		assertThat(below_100, hasItems(17, 42));
+		assertThat(below_100.size(), is(equalTo(2)));
 	}
 
 	private List<Integer> cons(final Integer num, final List<Integer> nums) {
