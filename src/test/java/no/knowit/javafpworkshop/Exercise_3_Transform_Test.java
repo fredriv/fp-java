@@ -40,8 +40,7 @@ public class Exercise_3_Transform_Test {
 		Person han = new Person("Han", "Solo", 29);
 		final List<Person> people = ImmutableList.of(luke, leia, han);
 
-		List<String> firstNames = extract(people, on(Person.class)
-				.getFirstName());
+		List<String> firstNames = extract(people, on(Person.class).getFirstName());
 		firstNames = with(people).extract(on(Person.class).getFirstName());
 
 		assertThat(firstNames, hasItems("Luke", "Leia", "Han"));
@@ -61,8 +60,7 @@ public class Exercise_3_Transform_Test {
 		Person han = new Person("Han", "Solo", 29);
 		final List<Person> people = ImmutableList.of(luke, leia, han);
 
-		F<Person, String> toFirstName = fFor(callsTo(Person.class)
-				.getFirstName());
+		F<Person, String> toFirstName = fFor(callsTo(Person.class).getFirstName());
 
 		fj.data.List<String> firstNames = iterableList(people).map(toFirstName);
 
@@ -82,11 +80,9 @@ public class Exercise_3_Transform_Test {
 
 		Matcher<Person> isTeen = having(on(Person.class).getAge(), lessThan(20));
 
-		List<String> firstNames = extract(filter(isTeen, people),
-				on(Person.class).getFirstName());
+		List<String> firstNames = extract(filter(isTeen, people), on(Person.class).getFirstName());
 
-		firstNames = with(people).retain(isTeen).extract(
-				on(Person.class).getFirstName());
+		firstNames = with(people).retain(isTeen).extract(on(Person.class).getFirstName());
 
 		assertThat(firstNames, hasItems("Luke", "Leia"));
 		assertThat(firstNames, not(hasItem("Han")));
@@ -104,16 +100,13 @@ public class Exercise_3_Transform_Test {
 		final List<Person> people = ImmutableList.of(luke, leia, han);
 
 		F<Person, Boolean> isTeen = new F<Person, Boolean>() {
-			@Override
 			public Boolean f(Person p) {
 				return p.getAge() < 20;
 			}
 		};
-		F<Person, String> toFirstName = fFor(callsTo(Person.class)
-				.getFirstName());
+		F<Person, String> toFirstName = fFor(callsTo(Person.class).getFirstName());
 
-		fj.data.List<String> firstNames = iterableList(people).filter(isTeen)
-				.map(toFirstName);
+		fj.data.List<String> firstNames = iterableList(people).filter(isTeen).map(toFirstName);
 
 		assertThat(firstNames, hasItems("Luke", "Leia"));
 		assertThat(firstNames, not(hasItem("Han")));
